@@ -1,20 +1,22 @@
 {
   "include": ["src", "types"],
+  "exclude": ["node_modules/**/*"],
   "compilerOptions": {
     "module": "esnext",
     "target": "esnext",
     "moduleResolution": "node",
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "baseUrl": "./",
     /* paths - If you configure Snowpack import aliases, add them here. */
     "paths": {
       /* "source: skypack" type declarations are installed to ".snowpack/types" */
-      "*": [".snowpack/types/*"]
+      "*": [".snowpack/types/*"],
+      "@/*": ["src/*"]
     },
     /* noEmit - Snowpack builds (emits) files, not tsc. */
     "noEmit": true,
     /* Additional Options */
-    "strict": true,
+    "strict": false,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
