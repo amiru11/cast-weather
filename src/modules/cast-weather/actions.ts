@@ -1,6 +1,6 @@
 import { createAsyncAction } from 'typesafe-actions';
 import type { AxiosError } from 'axios';
-import type { ICurrentWeahter, IDetailWeahter } from '@/interfaces/weather';
+import type { ICurrentWeather, IDetailWeather } from '@/interfaces/weather';
 
 // Create Action Type
 export const GET_WEATHER_BY_CITY = 'castWeather/GET_WEATHER_BY_CITY';
@@ -15,10 +15,10 @@ export const getWeatherByCityAsync = createAsyncAction(
   GET_WEATHER_BY_CITY,
   GET_WEATHER_BY_CITY_SUCCESS,
   GET_WEATHER_BY_CITY_ERROR,
-)<string, ICurrentWeahter, AxiosError>();
+)<string, ICurrentWeather, AxiosError>();
 
 export const getWeatherDetailAsync = createAsyncAction(
   GET_WEATHER_DETAIL,
   GET_WEATHER_DETAIL_SUCCESS,
   GET_WEATHER_DETAIL_ERROR,
-)<string, IDetailWeahter, AxiosError>();
+)<{ lat: number; lon: number }, IDetailWeather, AxiosError>();

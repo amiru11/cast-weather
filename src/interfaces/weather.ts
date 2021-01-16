@@ -66,7 +66,7 @@ interface IDetailWeatherItem {
   pop?: number;
 }
 
-export interface ICurrentWeahter {
+export interface ICurrentWeather {
   coord: ICoordProp;
   weather: IWeatherProp;
   base: string;
@@ -81,7 +81,7 @@ export interface ICurrentWeahter {
   name: string;
   cod: number;
 }
-export interface IDetailWeahter {
+export interface IDetailWeather {
   lat: number;
   lon: number;
   timezone: string;
