@@ -1,13 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createStore, applyMiddleware } from 'redux';
+import createSagaMiddleware from 'redux-saga';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { Provider } from 'react-redux';
+import rootReducer, { rootSaga } from '@/modules';
 import App from '@/App';
 
 import GlobalStyle from '@/styles';
 
+const sagaMiddleware = createSagaMiddleware(); // Create Saga middleware with a list of Sagas to run
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(sagaMiddleware))); // Connect the Saga middleware to the Redux store
+sagaMiddleware.run(rootSaga); // Start our Saga.
+
 ReactDOM.render(
   <React.StrictMode>
-    <GlobalStyle />
-    <App />
+    <Provider store={store}>
+      <GlobalStyle />
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root'),
 );

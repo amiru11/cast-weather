@@ -5,8 +5,8 @@ const { SNOWPACK_PUBLIC_WEATHER_KEY, SNOWPACK_PUBLIC_WEATHER_HOST } = import.met
 const host = SNOWPACK_PUBLIC_WEATHER_HOST;
 const appid = SNOWPACK_PUBLIC_WEATHER_KEY;
 
-export const getWeatherByCity = (cityName: string): Promise<AxiosResponse> => {
-  return requestAxios({
+export const getWeatherByCity = async (cityName: string): Promise<any> => {
+  const result: AxiosResponse = await requestAxios({
     url: `${host}weather`,
     params: {
       appid,
@@ -14,9 +14,10 @@ export const getWeatherByCity = (cityName: string): Promise<AxiosResponse> => {
       units: 'metric',
     },
   });
+  return result.data;
 };
 
-export const getWeatherOneCall = ({ lat, lon }: { lat: number; lon: number }): Promise<AxiosResponse> => {
+export const getWeatherDetail = ({ lat, lon }: { lat: number; lon: number }): Promise<AxiosResponse> => {
   return requestAxios({
     url: `${host}onecall`,
     params: {
@@ -24,6 +25,7 @@ export const getWeatherOneCall = ({ lat, lon }: { lat: number; lon: number }): P
       lat,
       lon,
       units: 'metric',
+      exclude: 'alert,minutely,hourly',
     },
   });
 };
