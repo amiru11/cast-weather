@@ -1,18 +1,17 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getWeatherByCityAsync } from '@/modules/cast-weather';
-import type { RootState } from '@/modules';
+import styled from 'styled-components';
+import Header from '@/components/Header';
+
+const Main = styled.main`
+  height: calc(100vh - (48px + 2rem));
+`;
 
 function App(): JSX.Element {
-  const { data, loading, error } = useSelector((state: RootState) => state.castWeather.currentWeather);
-  const dispatch = useDispatch();
-
-  const handleClickSubmit = () => {
-    dispatch(getWeatherByCityAsync.request('seoul'));
-  };
+  // const { data, loading, error } = useSelector((state: RootState) => state.castWeather.currentWeather);
   return (
     <div className="App">
-      <button onClick={handleClickSubmit}>Search</button>
+      <Header />
+      <Main />
     </div>
   );
 }

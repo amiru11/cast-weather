@@ -1,7 +1,13 @@
 import React from 'react';
+import styled from 'styled-components';
+const Icon = styled.div`
+  width: 30px;
+  height: 30px;
+  background-color: #ff9999;
+`;
 
-function IconWeather(): JSX.Element {
-  return <div></div>;
+function IconWeatherComponent(): JSX.Element {
+  return <Icon />;
 }
 
-export default IconWeather;
+export default IconWeatherComponent;
