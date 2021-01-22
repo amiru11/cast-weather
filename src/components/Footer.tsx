@@ -15,9 +15,14 @@ const Footer = styled.footer`
   }
 
   a {
-    color: #ff9999;
+    color: #333333;
     font-size: 1.5rem;
     margin-left: 10px;
+    transition: color 0.5s;
+
+    &:hover {
+      color: #ff9999;
+    }
   }
 `;
 

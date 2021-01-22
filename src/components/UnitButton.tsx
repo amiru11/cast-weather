@@ -1,4 +1,7 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '@/modules';
+import { setCommonUnits } from '@/modules/common';
 import styled from 'styled-components';
 
 interface IButton {
@@ -33,10 +36,27 @@ const Button = styled.button<IButton>`
 `;
 
 function UnitButton(): JSX.Element {
+  const units = useSelector((state: RootState) => state.common.units);
+  const dispatch = useDispatch();
+
   return (
     <ButtonWrap>
-      <Button active={true}>C</Button>
-      <Button active={false}>F</Button>
+      <Button
+        active={units === 'metric'}
+        onClick={() => {
+          dispatch(setCommonUnits('metric'));
+        }}
+      >
+        C
+      </Button>
+      <Button
+        active={units === 'standard'}
+        onClick={() => {
+          dispatch(setCommonUnits('standard'));
+        }}
+      >
+        F
+      </Button>
     </ButtonWrap>
   );
 }
