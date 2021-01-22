@@ -7,7 +7,7 @@ import {
   GET_WEATHER_DETAIL,
   GET_WEATHER_DETAIL_SUCCESS,
   GET_WEATHER_DETAIL_ERROR,
-} from '@/modules/cast-weather//actions';
+} from '@/modules/cast-weather/actions';
 
 const initialState: TCastWeatherState = {
   currentWeather: {

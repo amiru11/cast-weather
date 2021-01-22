@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import SearchBar from '@/components/SearchBar';
 import UnitButton from '@/components/UnitButton';
+import Logo from '@/components/Logo';
 
 const Header = styled.header`
   width: 100%;
@@ -10,14 +11,15 @@ const Header = styled.header`
   margin: 0 auto;
   grid-area: header;
   display: grid;
-  grid-template-columns: 60px 1fr 60px;
-  grid-column: 2 / 3;
-  padding: 1rem;
+  grid-template-columns: 120px 1fr 120px;
+  column-gap: 10px;
+  padding: 1rem 0;
 `;
 
 function HeaderComponent(): JSX.Element {
   return (
     <Header>
+      <Logo />
       <SearchBar />
       <UnitButton />
     </Header>

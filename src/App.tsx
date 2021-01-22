@@ -1,10 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
 import Header from '@/components/Header';
-
-const Main = styled.main`
-  height: calc(100vh - (48px + 2rem));
-`;
+import Main from '@/components/Main';
+import Footer from '@/components/Footer';
 
 function App(): JSX.Element {
   // const { data, loading, error } = useSelector((state: RootState) => state.castWeather.currentWeather);
@@ -12,6 +9,7 @@ function App(): JSX.Element {
     <div className="App">
       <Header />
       <Main />
+      <Footer />
     </div>
   );
 }
