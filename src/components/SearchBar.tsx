@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
-import { getWeatherByCityAsync } from '@/modules/cast-weather';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '@/modules';
+import { getWeatherResultAsync } from '@/modules/cast-weather';
 import { MdSearch, MdCancel } from 'react-icons/md';
 
 interface ISearchButton {
@@ -9,6 +10,55 @@ interface ISearchButton {
 }
 
 const { useState } = React;
+
+function SearchBarComponent(): JSX.Element {
+  const { units } = useSelector((state: RootState) => ({
+    units: state.common.units,
+  }));
+  const dispatch = useDispatch();
+  const [searchValue, setSearchValue] = useState<string>('');
+
+  const handleChange = ({
+    target,
+  }: React.ChangeEvent<HTMLInputElement>): void => {
+    setSearchValue(target.value);
+  };
+
+  const handleKeydown = (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ): void => {
+    if (event.key === 'enter') {
+      handleClickSubmit();
+    }
+  };
+  const handleClickSubmit = (): void => {
+    if (!searchValue) return;
+    dispatch(getWeatherResultAsync.request({ cityName: searchValue, units }));
+  };
+  const handleClickCancel = (): void => {
+    setSearchValue('');
+  };
+
+  return (
+    <SearchWrap>
+      <SearchButton active onClick={handleClickSubmit}>
+        <MdSearch />
+      </SearchButton>
+      <SearchInput
+        type="text"
+        value={searchValue}
+        onChange={handleChange}
+        onKeyDown={handleKeydown}
+      />
+      <SearchButton active={!!searchValue} onClick={handleClickCancel}>
+        <MdCancel />
+      </SearchButton>
+    </SearchWrap>
+  );
+}
+
+export default SearchBarComponent;
+
 const SearchWrap = styled.div`
   border: 1px solid #eeeeee;
   border-radius: 50px;
@@ -40,34 +90,3 @@ const SearchButton = styled.button<ISearchButton>`
   outline: 0;
   visibility: ${(props) => (props.active ? 'visible' : 'hidden')};
 `;
-
-function SearchBarComponent(): JSX.Element {
-  const dispatch = useDispatch();
-  const [searchValue, setSearchValue] = useState<string>('');
-
-  const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>): void => {
-    setSearchValue(target.value);
-  };
-  const handleClickSubmit = (): void => {
-    if (!searchValue) return;
-
-    dispatch(getWeatherByCityAsync.request(searchValue));
-  };
-  const handleClickCancel = (): void => {
-    setSearchValue('');
-  };
-
-  return (
-    <SearchWrap>
-      <SearchButton active onClick={handleClickSubmit}>
-        <MdSearch />
-      </SearchButton>
-      <SearchInput type="text" value={searchValue} onChange={handleChange} />
-      <SearchButton active={!!searchValue} onClick={handleClickCancel}>
-        <MdCancel />
-      </SearchButton>
-    </SearchWrap>
-  );
-}
-
-export default SearchBarComponent;

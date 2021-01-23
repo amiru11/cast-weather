@@ -1,7 +1,10 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/modules';
 import styled from 'styled-components';
 
 import IconWeather from '@/components/IconWeather';
+import { ICurrentWeather } from '@/interfaces/weather';
 
 const Container = styled.div`
   width: 100%;
@@ -49,22 +52,31 @@ const DescList = styled.ul`
 const DescListItem = styled.li``;
 
 function CurrentItem(): JSX.Element {
+  const {
+    data,
+    loading,
+    error,
+  }: {
+    data: ICurrentWeather;
+    loading: boolean;
+    error: Error;
+  } = useSelector((state: RootState) => state.castWeather.currentWeather);
   return (
     <Container>
       <TempItem>
-        <span>17°C</span>
+        <span>{`${Math.ceil(data.main.temp)}°C`}</span>
       </TempItem>
       <CircleWrap>
         <TitleWrap>
-          <h2>Seoul</h2>
+          <h2>{data.name}</h2>
         </TitleWrap>
         <CircleItem>
           <IconWeather type={'big'} />
         </CircleItem>
       </CircleWrap>
       <DescList>
-        <DescListItem>Humid: 48%</DescListItem>
-        <DescListItem>Wind: 10km/h</DescListItem>
+        <DescListItem>{`Humid: ${data.main.humidity}%`}</DescListItem>
+        <DescListItem>{`Wind: ${data.wind.speed}/h`}</DescListItem>
       </DescList>
     </Container>
   );

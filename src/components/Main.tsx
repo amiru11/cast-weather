@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/modules';
 import styled from 'styled-components';
 
 import CurrentItem from '@/components/CurrentItem';
@@ -19,18 +21,33 @@ const ForecastList = styled.ul`
 `;
 
 function MainComponent(): JSX.Element {
+  const {
+    data: detailWeather,
+    loading: detailLoading,
+    error: detailError,
+  } = useSelector((state: RootState) => ({
+    ...state.castWeather.detailWeather,
+  }));
+  const {
+    data: currentWeather,
+    loading: currentLoading,
+    error: currentError,
+  } = useSelector((state: RootState) => ({
+    ...state.castWeather.currentWeather,
+  }));
   return (
     <Main>
-      <CurrentItem />
-      <ForecastList>
-        <ForecastItem />
-        <ForecastItem />
-        <ForecastItem />
-        <ForecastItem />
-        <ForecastItem />
-        <ForecastItem />
-        <ForecastItem />
-      </ForecastList>
+      {!currentLoading && currentWeather && <CurrentItem />}
+      {currentError && <p>Error!</p>}
+      {!detailLoading && detailWeather && (
+        <ForecastList>
+          {detailWeather?.daily.length > 0 &&
+            detailWeather?.daily.map((forecastItem) => (
+              <ForecastItem key={forecastItem.dt} data={forecastItem} />
+            ))}
+        </ForecastList>
+      )}
+      {detailError && <p>Error!</p>}
     </Main>
   );
 }

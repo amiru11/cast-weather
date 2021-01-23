@@ -1,6 +1,31 @@
 import React from 'react';
 import styled from 'styled-components';
 import IconWeather from '@/components/IconWeather';
+import { IDetailWeatherItem } from '@/interfaces/weather';
+
+interface IForecastItemProps {
+  data: IDetailWeatherItem;
+}
+
+function ForecastItem(props: IForecastItemProps): JSX.Element {
+  const { temp } = props?.data;
+  return (
+    <Container>
+      <CircleWrap>
+        <CircleItem>
+          <IconWeather type={'small'} />
+        </CircleItem>
+        <TempItem>
+          <span>
+            {Math.ceil(temp.min)}°C | {Math.ceil(temp.max)}°C
+          </span>
+        </TempItem>
+      </CircleWrap>
+    </Container>
+  );
+}
+
+export default ForecastItem;
 
 const Container = styled.div`
   margin-top: 80px;
@@ -24,20 +49,3 @@ const TempItem = styled.div`
   margin-top: 30px;
   white-space: nowrap;
 `;
-
-function ForecastItem(): JSX.Element {
-  return (
-    <Container>
-      <CircleWrap>
-        <CircleItem>
-          <IconWeather type={'small'} />
-        </CircleItem>
-        <TempItem>
-          <span>17°C | 17°C</span>
-        </TempItem>
-      </CircleWrap>
-    </Container>
-  );
-}
-
-export default ForecastItem;

@@ -48,11 +48,11 @@ interface IFeelsLikeProp {
   morn: number;
 }
 
-interface IDetailWeatherItem {
+export interface IDetailWeatherItem {
   dt: number;
   sunrise: number;
   sunset: number;
-  temp: number | ITempProp;
+  temp: ITempProp;
   feels_like: number | IFeelsLikeProp;
   pressure: number;
   humidity: number;
