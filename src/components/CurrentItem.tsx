@@ -1,10 +1,55 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/modules';
 import styled from 'styled-components';
+import { useTemperatureUnit } from '@/hooks/useTemperatureUnit';
+import { unitForDisplay } from '@/lib/utils';
 
 import IconWeather from '@/components/IconWeather';
+import { RootState } from '@/modules';
 import { ICurrentWeather } from '@/interfaces/weather';
+
+interface ICircleItemProps {
+  circleColor: string;
+}
+
+function CurrentItem(): JSX.Element {
+  const {
+    data,
+    loading,
+    error,
+  }: {
+    data: ICurrentWeather;
+    loading: boolean;
+    error: Error;
+  } = useSelector((state: RootState) => state.castWeather.currentWeather);
+  const units = useSelector((state: RootState) => state.common.units);
+  const [mainTemperature, castColor] = useTemperatureUnit(
+    units,
+    data.main.temp,
+  );
+  const displayUnit = unitForDisplay(units);
+  return (
+    <Container>
+      <TempItem>
+        <span>{`${mainTemperature}${displayUnit}`}</span>
+      </TempItem>
+      <CircleWrap>
+        <TitleWrap>
+          <h2>{data.name}</h2>
+        </TitleWrap>
+        <CircleItem circleColor={String(castColor)}>
+          <IconWeather type={'big'} icon={data.weather[0].icon} />
+        </CircleItem>
+      </CircleWrap>
+      <DescList>
+        <DescListItem>{`Humid: ${data.main.humidity}%`}</DescListItem>
+        <DescListItem>{`Wind: ${data.wind.speed}/h`}</DescListItem>
+      </DescList>
+    </Container>
+  );
+}
+
+export default CurrentItem;
 
 const Container = styled.div`
   width: 100%;
@@ -32,8 +77,12 @@ const CircleWrap = styled.div`
   align-items: center;
 `;
 
-const CircleItem = styled.div`
-  background-color: rgb(255, 208, 123);
+const CircleItem = styled.div<ICircleItemProps>`
+  background: linear-gradient(
+    10deg,
+    transparent,
+    ${(props) => props.circleColor}
+  );
   border-radius: 50%;
   height: 200px;
   width: 200px;
@@ -50,36 +99,3 @@ const DescList = styled.ul`
   align-self: flex-end;
 `;
 const DescListItem = styled.li``;
-
-function CurrentItem(): JSX.Element {
-  const {
-    data,
-    loading,
-    error,
-  }: {
-    data: ICurrentWeather;
-    loading: boolean;
-    error: Error;
-  } = useSelector((state: RootState) => state.castWeather.currentWeather);
-  return (
-    <Container>
-      <TempItem>
-        <span>{`${Math.ceil(data.main.temp)}°C`}</span>
-      </TempItem>
-      <CircleWrap>
-        <TitleWrap>
-          <h2>{data.name}</h2>
-        </TitleWrap>
-        <CircleItem>
-          <IconWeather type={'big'} />
-        </CircleItem>
-      </CircleWrap>
-      <DescList>
-        <DescListItem>{`Humid: ${data.main.humidity}%`}</DescListItem>
-        <DescListItem>{`Wind: ${data.wind.speed}/h`}</DescListItem>
-      </DescList>
-    </Container>
-  );
-}
-
-export default CurrentItem;

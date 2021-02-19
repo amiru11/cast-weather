@@ -8,7 +8,18 @@ interface IIcon {
 
 interface IIconWeatherProps {
   type: string;
+  icon: string;
 }
+
+function IconWeatherComponent({ type, icon }: IIconWeatherProps): JSX.Element {
+  return (
+    <Icon type={type}>
+      <img src={`images/${icon}.svg`} alt="" />
+    </Icon>
+  );
+}
+
+export default IconWeatherComponent;
 
 const Icon = styled.div.attrs((props: IIcon) => ({
   width: props.type === 'big' ? '100px' : '50px',
@@ -17,15 +28,9 @@ const Icon = styled.div.attrs((props: IIcon) => ({
 }))<IIcon>`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
-  background-color: #ff9999;
+  background-color: transparent;
   border-radius: 50%;
   position: absolute;
   bottom: ${(props) => props.bottom};
   right: 0;
 `;
-
-function IconWeatherComponent({ type }: IIconWeatherProps): JSX.Element {
-  return <Icon type={type} />;
-}
-
-export default IconWeatherComponent;

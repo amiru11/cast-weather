@@ -34,13 +34,13 @@ function* getWeatherResultSaga({ payload }: IResultActionPayload) {
       units,
     });
     yield put(getWeatherByCityAsync.success(current));
-    console.log('current', current);
+    // console.log('current', current);
     const { coord } = current;
     const week: IDetailWeather = yield call(getWeatherDetail, {
       ...coord,
       units,
     });
-    console.log('week', week);
+    // console.log('week', week);
     yield put(
       getWeatherDetailAsync.success({
         ...week,
