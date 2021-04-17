@@ -18,16 +18,13 @@ function SearchBarComponent(): JSX.Element {
   const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState<string>('');
 
-  const handleChange = ({
-    target,
-  }: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>): void => {
     setSearchValue(target.value);
   };
 
-  const handleKeydown = (
-    event: React.KeyboardEvent<HTMLInputElement>,
-  ): void => {
-    if (event.key === 'enter') {
+  const handleKeydown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
+    console.log(event.key);
+    if (event.key === 'Enter') {
       handleClickSubmit();
     }
   };
@@ -44,12 +41,7 @@ function SearchBarComponent(): JSX.Element {
       <SearchButton active onClick={handleClickSubmit}>
         <MdSearch />
       </SearchButton>
-      <SearchInput
-        type="text"
-        value={searchValue}
-        onChange={handleChange}
-        onKeyDown={handleKeydown}
-      />
+      <SearchInput type="text" value={searchValue} onChange={handleChange} onKeyDown={handleKeydown} />
       <SearchButton active={!!searchValue} onClick={handleClickCancel}>
         <MdCancel />
       </SearchButton>

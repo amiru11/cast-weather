@@ -26,49 +26,47 @@ const reducer = createReducer<TCastWeatherState, TCastWeatherAction>(initialStat
   [GET_WEATHER_BY_CITY]: (state) => ({
     ...state,
     currentWeather: {
+      ...state.currentWeather,
       loading: true,
-      error: null,
-      data: null,
     },
   }),
   [GET_WEATHER_BY_CITY_SUCCESS]: (state, action) => ({
     ...state,
     currentWeather: {
+      ...state.currentWeather,
       loading: false,
-      error: null,
       data: action.payload,
     },
   }),
   [GET_WEATHER_BY_CITY_ERROR]: (state, action) => ({
     ...state,
     currentWeather: {
+      ...state.currentWeather,
       loading: false,
       error: action.payload,
-      data: null,
     },
   }),
   [GET_WEATHER_DETAIL]: (state) => ({
     ...state,
     detailWeather: {
+      ...state.detailWeather,
       loading: true,
-      error: null,
-      data: null,
     },
   }),
   [GET_WEATHER_DETAIL_SUCCESS]: (state, action) => ({
     ...state,
     detailWeather: {
+      ...state.detailWeather,
       loading: false,
-      error: null,
       data: action.payload,
     },
   }),
   [GET_WEATHER_DETAIL_ERROR]: (state, action) => ({
     ...state,
     detailWeather: {
+      ...state.detailWeather,
       loading: false,
       error: action.payload,
-      data: null,
     },
   }),
 });

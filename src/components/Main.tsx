@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/modules';
 import styled from 'styled-components';
@@ -7,33 +7,29 @@ import CurrentItem from '@/components/CurrentItem';
 import ForecastItem from '@/components/ForecastItem';
 
 function MainComponent(): JSX.Element {
-  const {
-    data: detailWeather,
-    loading: detailLoading,
-    error: detailError,
-  } = useSelector((state: RootState) => ({
+  const { data: detailWeather, loading: detailLoading, error: detailError } = useSelector((state: RootState) => ({
     ...state.castWeather.detailWeather,
   }));
-  const {
-    data: currentWeather,
-    loading: currentLoading,
-    error: currentError,
-  } = useSelector((state: RootState) => ({
+  const { data: currentWeather, loading: currentLoading, error: currentError } = useSelector((state: RootState) => ({
     ...state.castWeather.currentWeather,
   }));
+
+  useEffect(() => {
+    if (detailError) {
+      alert(`Sorry! I can't find City!`);
+    }
+  }, [detailError]);
+
+  console.log('detailWeather', detailWeather);
   return (
     <Main>
       {!currentLoading && currentWeather && <CurrentItem />}
-      {currentError && <p>Error!</p>}
-      {!detailLoading && detailWeather && (
+      {detailWeather && (
         <ForecastList>
           {detailWeather?.daily.length > 0 &&
-            detailWeather?.daily.map((forecastItem) => (
-              <ForecastItem key={forecastItem.dt} data={forecastItem} />
-            ))}
+            detailWeather?.daily.map((forecastItem) => <ForecastItem key={forecastItem.dt} data={forecastItem} />)}
         </ForecastList>
       )}
-      {detailError && <p>Error!</p>}
     </Main>
   );
 }

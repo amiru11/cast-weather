@@ -17,14 +17,8 @@ interface IResultActionPayload {
   };
 }
 
-const getWeatherByCitySaga = createAsyncSaga(
-  getWeatherByCityAsync,
-  getWeatherByCity,
-);
-const getWeatherDetailSaga = createAsyncSaga(
-  getWeatherDetailAsync,
-  getWeatherDetail,
-);
+const getWeatherByCitySaga = createAsyncSaga(getWeatherByCityAsync, getWeatherByCity);
+const getWeatherDetailSaga = createAsyncSaga(getWeatherDetailAsync, getWeatherDetail);
 
 function* getWeatherResultSaga({ payload }: IResultActionPayload) {
   try {
@@ -34,13 +28,13 @@ function* getWeatherResultSaga({ payload }: IResultActionPayload) {
       units,
     });
     yield put(getWeatherByCityAsync.success(current));
-    // console.log('current', current);
+    console.log('current', current);
     const { coord } = current;
     const week: IDetailWeather = yield call(getWeatherDetail, {
       ...coord,
       units,
     });
-    // console.log('week', week);
+    console.log('week', week);
     yield put(
       getWeatherDetailAsync.success({
         ...week,
